@@ -29,20 +29,28 @@ import org.apache.velocity.tools.generic.EscapeTool;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.IReadProperties;
+import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MProperties;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformContext;
 
 @Component(properties="extension=vm")
-public class VelocityResourceProcessor implements ResourceProcessor {
+public class VelocityResourceProcessor extends MLog implements ResourceProcessor {
 
 	@Override
 	public void doProcess(File from, File to, TransformContext context) throws Exception {
 		
 		VelocityEngine ve = new VelocityEngine();
 		ve.setProperty( VelocityEngine.RUNTIME_LOG, "mylog");
+		
 		IReadProperties config = context.getProcessorConfig();
+		if (config == null) config = new MProperties();
+		
 		String velocityProperties = config.getString("velocity.properties","velocity.properties");
-		File propFile = new File(context.getTemplateRoot(), velocityProperties );
+		
+		File templateRoot = context.getTemplateRoot();
+		if (templateRoot == null) templateRoot = from.getParentFile();
+		File propFile = new File(templateRoot, velocityProperties );
 		Properties props = new Properties();
 		
 		if (propFile.exists()) {
@@ -52,7 +60,10 @@ public class VelocityResourceProcessor implements ResourceProcessor {
 		}
 
 		String path = from.getParentFile().getAbsolutePath();
-		props.put(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, path  + "," + context.getTemplateRoot().getCanonicalPath());
+		String projectPath = context.getProjectRoot() != null ? context.getProjectRoot().getAbsolutePath() : null;
+		props.put(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, path  + "," + templateRoot.getCanonicalPath());
+		if (projectPath != null)
+			props.setProperty(RuntimeConstants.EVENTHANDLER_INCLUDE, IncludeFullPath.class.getName());
 		
 		ve.init(props);
 		Template t = ve.getTemplate(from.getName());
@@ -64,10 +75,23 @@ public class VelocityResourceProcessor implements ResourceProcessor {
 		vcontext.put("date", new DateTool());
 		vcontext.put("path", path);
 		vcontext.put("config", config);
-
-			FileWriter writer = new FileWriter(to);
+		if (projectPath != null) {
+			IncludeFullPath.setContext(vcontext);
+			IncludeFullPath.setProjectPath(projectPath);
+		}
+		FileWriter writer = new FileWriter(to);
+		try {
 			t.merge(vcontext, writer);
+		} catch (Throwable th) {
+			log().e(from,th);
+			throw th;
+		} finally {
+			if (projectPath != null) {
+				IncludeFullPath.setContext(null);
+				IncludeFullPath.setProjectPath(null);
+			}
 			writer.close();
+		}
 	}
 	
 }

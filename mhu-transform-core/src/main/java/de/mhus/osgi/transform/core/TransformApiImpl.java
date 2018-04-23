@@ -40,8 +40,8 @@ public class TransformApiImpl extends MLog implements TransformApi {
 	}
 
 	@Override
-	public TransformContext createContext(File rootDir, MProperties config, MProperties param) {
-		return new ContextImpl(rootDir, config, param);
+	public TransformContext createContext(File projectRoot, File templateRoot, MProperties config, MProperties param) {
+		return new ContextImpl(projectRoot, templateRoot, config, param);
 	}
 
 	@Override

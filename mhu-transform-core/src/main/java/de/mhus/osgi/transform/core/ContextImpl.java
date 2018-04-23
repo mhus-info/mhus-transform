@@ -24,12 +24,14 @@ import de.mhus.osgi.transform.api.TransformContext;
 
 public class ContextImpl implements TransformContext {
 
-	private File root;
+	private File templateRoot; // root of the current template
+	private File projectRoot; // base folder of all templates
 	private MProperties config;
 	private MProperties param;
 
-	public ContextImpl(File rootDir, MProperties config, MProperties param) {
-		if (rootDir != null) this.root = rootDir;
+	public ContextImpl(File projectRoot, File templateRoot, MProperties config, MProperties param) {
+		this.templateRoot = templateRoot;
+		this.projectRoot = projectRoot;
 		this.config = config;
 		this.param = param;
 	}
@@ -41,12 +43,17 @@ public class ContextImpl implements TransformContext {
 
 	@Override
 	public File getTemplateRoot() {
-		return root;
+		return templateRoot;
 	}
 
 	@Override
 	public IProperties getParameters() {
 		return param;
+	}
+
+	@Override
+	public File getProjectRoot() {
+		return projectRoot;
 	}
 
 }

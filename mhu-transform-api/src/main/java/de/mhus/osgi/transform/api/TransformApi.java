@@ -24,8 +24,26 @@ public interface TransformApi {
 
 	ResourceProcessor findResourceProcessor(String fileName) throws NotFoundException;
 
-	TransformContext createContext(File rootDir, MProperties config, MProperties param);
+	/**
+	 * Create the context object before processing a template. The context can be used multiple times.
+	 * 
+	 * @param projectRoot Root of multiple template configurations (not mandatory for all template engines) set to null if not needed
+	 * @param templateRoot Root of the specified template configuration (not mandatory for all template engines) set to null if not needed
+	 * @param config Parameters to configure the template engine
+	 * @param param Parameters for the template
+	 * @return The context to process templates
+	 */
+	TransformContext createContext(File projectRoot, File templateRoot, MProperties config, MProperties param);
 
+	/**
+	 * Process a template and create a new document.
+	 * 
+	 * @param processor The used processor
+	 * @param from Source template
+	 * @param to Target file
+	 * @param context The context
+	 * @throws Exception If something went wrong
+	 */
 	void doProcess(ResourceProcessor processor, File from, File to, TransformContext context) throws Exception;
 
 	/**

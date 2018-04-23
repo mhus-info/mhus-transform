@@ -23,13 +23,13 @@ import de.mhus.lib.core.MProperties;
 public class TransformUtil {
 
 	public static void transform(File from, File to, MProperties param) throws Exception {
-		transform(from, to, null, null, param, null);
+		transform(from, to, null, null, null, param, null);
 	}
 	
-	public static void transform(File from, File to, File rootDir, MProperties config, MProperties param, String processorName) throws Exception {
+	public static void transform(File from, File to, File projectRoot, File templateRoot, MProperties config, MProperties param, String processorName) throws Exception {
 		TransformApi api = MApi.lookup(TransformApi.class);
 
-		TransformContext context = api.createContext(rootDir, config, param);
+		TransformContext context = api.createContext(projectRoot, templateRoot, config, param);
 		ResourceProcessor processor = null;
 		if (processorName != null)
 			processor = api.findProcessor(processorName);

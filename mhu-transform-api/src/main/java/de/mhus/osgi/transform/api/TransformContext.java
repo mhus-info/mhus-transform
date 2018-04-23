@@ -28,4 +28,6 @@ public interface TransformContext {
 
 	IProperties getParameters();
 
+	File getProjectRoot();
+
 }

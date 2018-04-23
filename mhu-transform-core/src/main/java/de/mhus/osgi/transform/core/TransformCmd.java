@@ -43,8 +43,11 @@ public class TransformCmd implements Action {
 	@Option(name="-c", aliases="--config", description="config file",required=false)
 	String configFile = null;
 
-	@Option(name="-r", aliases="--root", description="template root directory",required=false)
+	@Option(name="-t", aliases="--templates", description="template root directory",required=false)
 	String dir = null;
+	
+	@Option(name="-r", aliases="--root", description="project root directory",required=false)
+	String root = null;
 	
 	@Option(name="-p", aliases="--print", description="print after creation",required=false)
 	boolean print = false;
@@ -60,7 +63,15 @@ public class TransformCmd implements Action {
 		if (configFile != null)
 			config = MProperties.load(configFile);
 		
-		TransformUtil.transform(new File(from), new File(to), dir == null ? null : new File(dir), config, param, processorName);
+		TransformUtil.transform(
+				new File(from), 
+				new File(to), 
+				root == null ? null : new File(root), 
+				dir == null ? null : new File(dir), 
+				config, 
+				param, 
+				processorName
+				);
 		
 		if (print) {
 			System.out.println( MFile.readFile(new File(to)) );

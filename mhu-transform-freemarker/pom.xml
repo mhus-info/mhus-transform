@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mhu-transform-core</artifactId>
+	<artifactId>mhu-transform-freemarker</artifactId>
 	<packaging>bundle</packaging>
 
 	<parent>
@@ -45,13 +45,14 @@
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>
-							de.mhus.osgi.transform.core*;version=${project.version}
+							de.mhus.osgi.transform.freemarker*;version=${project.version}
 						</Export-Package>
 						<Import-Package>
-							*
+                    	*;resolution:=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 						<Service-Component>*</Service-Component>
+					    <Embed-Dependency>freemarker</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -85,18 +86,18 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>de.mhus.osgi</groupId>
-			<artifactId>mhu-osgi-services</artifactId>
-			<version>${osgitools.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<version>5.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+		  <groupId>org.freemarker</groupId>
+		  <artifactId>freemarker</artifactId>
+		  <version>2.3.28</version>
+		</dependency>
+		
 	</dependencies>
 
 
