@@ -52,6 +52,7 @@
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 						<Service-Component>*</Service-Component>
+						<Embed-Dependency>pdfbox,bcprov-jdk15on,bcpkix-jdk15on,fontbox</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>

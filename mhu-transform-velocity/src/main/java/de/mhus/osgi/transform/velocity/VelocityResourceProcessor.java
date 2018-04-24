@@ -18,6 +18,7 @@ package de.mhus.osgi.transform.velocity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.velocity.Template;
@@ -70,11 +71,14 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
 		
 		VelocityContext vcontext = new VelocityContext();
 		
-		vcontext.put("vars", context.getParameters());
-		vcontext.put("esc", new EscapeTool());
-		vcontext.put("date", new DateTool());
-		vcontext.put("path", path);
-		vcontext.put("config", config);
+		for (Entry<String, Object> entry : context.getParameters().entrySet()) 
+			vcontext.put(entry.getKey(), entry.getValue());
+		
+		// overwrite additional tooling
+		vcontext.put("__esc", new EscapeTool());
+		vcontext.put("__date", new DateTool());
+		vcontext.put("__path", path);
+		vcontext.put("__config", config);
 		if (projectPath != null) {
 			IncludeFullPath.setContext(vcontext);
 			IncludeFullPath.setProjectPath(projectPath);

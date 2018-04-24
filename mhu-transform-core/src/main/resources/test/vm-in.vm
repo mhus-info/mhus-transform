@@ -1,1 +1,1 @@
-Hello $vars.text
+Hello $text
