@@ -36,8 +36,8 @@
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/mhus/mhus-osgi-tools</url>
-    <connection>scm:git:https://github.com/mhus/mhus-osgi-tools/</connection>
+    <url>https://github.com/mhus/mhus-transform</url>
+    <connection>scm:git:https://github.com/mhus/mhus-transform</connection>
   </scm>
   <developers>
     <developer>
@@ -196,7 +196,7 @@
 
         <profiles>
           <profile>
-            <id>release-sign-artifacts</id>
+            <id>release</id>
             <activation>
               <property>
                 <name>performRelease</name>
@@ -208,7 +208,7 @@
                 <plugin>
                   <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-gpg-plugin</artifactId>
-                  <version>1.4</version>
+                  <version>1.5</version>
                   <configuration>
                     <passphrase>${gpg.passphrase}</passphrase>
                   </configuration>
