@@ -19,13 +19,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mhu-transform-jtwig</artifactId>
+	<artifactId>mhu-transform-freemarker</artifactId>
 	<packaging>bundle</packaging>
 
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
 		<artifactId>mhus-transform</artifactId>
-		<version>1.1.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -45,14 +45,14 @@
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>
-							de.mhus.osgi.transform.jtwig*;version=${project.version}
+							de.mhus.osgi.transform.freemarker*;version=${project.version}
 						</Export-Package>
 						<Import-Package>
                     	*;resolution:=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 						<Service-Component>*</Service-Component>
-						<Embed-Dependency>jtwig-core,jtwig-reflection,guava,commons-lang3,parboiled-java,parboiled-core,asm,asm-tree,asm-analysis,asm-util,concurrentlinkedhashmap-lru</Embed-Dependency>
+					    <Embed-Dependency>freemarker</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -92,69 +92,11 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.jtwig/jtwig-core -->
 		<dependency>
-		    <groupId>org.jtwig</groupId>
-		    <artifactId>jtwig-core</artifactId>
-		    <version>5.86.1.RELEASE</version>
+		  <groupId>org.freemarker</groupId>
+		  <artifactId>freemarker</artifactId>
+		  <version>2.3.28</version>
 		</dependency>
-		
-		<!-- embedded -->
-    <dependency>
-      <groupId>org.jtwig</groupId>
-      <artifactId>jtwig-reflection</artifactId>
-      <version>5.86.1.RELEASE</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>18.0</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.6</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.parboiled</groupId>
-      <artifactId>parboiled-java</artifactId>
-      <version>1.1.7</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.googlecode.concurrentlinkedhashmap</groupId>
-      <artifactId>concurrentlinkedhashmap-lru</artifactId>
-      <version>1.4.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.parboiled</groupId>
-        <artifactId>parboiled-core</artifactId>
-        <version>1.1.7</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ow2.asm</groupId>
-        <artifactId>asm</artifactId>
-        <version>5.0.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ow2.asm</groupId>
-        <artifactId>asm-tree</artifactId>
-        <version>5.0.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ow2.asm</groupId>
-        <artifactId>asm-analysis</artifactId>
-        <version>5.0.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.ow2.asm</groupId>
-        <artifactId>asm-util</artifactId>
-        <version>5.0.3</version>
-    </dependency>
 		
 	</dependencies>
 
