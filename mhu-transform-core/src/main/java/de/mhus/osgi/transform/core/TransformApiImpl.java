@@ -23,9 +23,9 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.transform.api.MutableTransformConfig;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformApi;
-import de.mhus.osgi.transform.api.TransformContext;
 
 @Component
 public class TransformApiImpl extends MLog implements TransformApi {
@@ -40,14 +40,8 @@ public class TransformApiImpl extends MLog implements TransformApi {
 	}
 
 	@Override
-	public TransformContext createContext(File projectRoot, File templateRoot, MProperties config, MProperties param) {
-		return new ContextImpl(projectRoot, templateRoot, config, param);
-	}
-
-	@Override
-	public void doProcess(ResourceProcessor processor, File from, File to, TransformContext context) throws Exception {
-		
-		processor.doProcess(from, to, context);
+	public MutableTransformConfig createConfig(File projectRoot, File templateRoot, MProperties config, MProperties param) {
+		return new ConfigImpl(projectRoot, templateRoot, config, param);
 	}
 
 	@Override
@@ -57,5 +51,4 @@ public class TransformApiImpl extends MLog implements TransformApi {
 		return processor;
 	}
 	
-
 }

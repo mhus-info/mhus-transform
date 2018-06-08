@@ -17,26 +17,51 @@ package de.mhus.osgi.transform.jtwig;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import aQute.bnd.annotation.component.Component;
+import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
-import de.mhus.osgi.transform.api.TransformContext;
+import de.mhus.osgi.transform.api.TransformConfig;
 
 @Component(properties="extension=twig")
 public class JtwigProcessor implements ResourceProcessor {
 
 	@Override
-	public void doProcess(File from, File to, TransformContext context) throws Exception {
-		JtwigTemplate template = JtwigTemplate.fileTemplate(from);
-        JtwigModel model = JtwigModel.newModel(context.getParameters());
-
-        FileOutputStream os = new FileOutputStream(to);
-        template.render(model, os);
-        os.close();
-        
+	public ProcessorContext createContext(TransformConfig config) throws Exception {
+		return new Context(config);
 	}
 
+	private class Context implements ProcessorContext {
+
+		private JtwigModel model;
+
+		public Context(TransformConfig context) {
+	        model = JtwigModel.newModel(context.getParameters());
+
+		}
+
+		@Override
+		public void doProcess(File from, File to) throws Exception {
+			JtwigTemplate template = JtwigTemplate.fileTemplate(from);
+			FileOutputStream os = new FileOutputStream(to);
+			template.render(model, os);
+			os.close();
+		}
+
+		@Override
+		public void close() {
+			model = null;
+		}
+
+		@Override
+		public void doProcess(File from, OutputStream out) throws Exception {
+			JtwigTemplate template = JtwigTemplate.fileTemplate(from);
+			template.render(model, out);
+		}
+		
+	}
 }

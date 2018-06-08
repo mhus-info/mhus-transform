@@ -20,7 +20,7 @@ import java.io.File;
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.IReadProperties;
 
-public interface TransformContext {
+public interface TransformConfig {
 
 	IReadProperties getProcessorConfig();
 
@@ -30,4 +30,6 @@ public interface TransformContext {
 
 	File getProjectRoot();
 
+	String getCharset();
+	
 }

@@ -29,18 +29,18 @@ import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MXml;
-import de.mhus.osgi.transform.api.TransformContext;
+import de.mhus.osgi.transform.api.TransformConfig;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 public class FillModel extends MLog {
 
 	private HashMap<String,Element> fields = new HashMap<>();
-	private TransformContext context;
+	private TransformConfig context;
 	private GroovyShell shell;
 	private String scriptTemplate;
 
-	public FillModel(File file, TransformContext context) throws ParserConfigurationException, SAXException, IOException {
+	public FillModel(File file, TransformConfig context) throws ParserConfigurationException, SAXException, IOException {
 		Element root = MXml.loadXml(file).getDocumentElement();
 		for (Element fieldE : MXml.getLocalElementIterator(root, "field")) {
 			fields.put(fieldE.getAttribute("name"), fieldE);

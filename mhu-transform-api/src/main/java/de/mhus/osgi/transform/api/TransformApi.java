@@ -33,18 +33,7 @@ public interface TransformApi {
 	 * @param param Parameters for the template
 	 * @return The context to process templates
 	 */
-	TransformContext createContext(File projectRoot, File templateRoot, MProperties config, MProperties param);
-
-	/**
-	 * Process a template and create a new document.
-	 * 
-	 * @param processor The used processor
-	 * @param from Source template
-	 * @param to Target file
-	 * @param context The context
-	 * @throws Exception If something went wrong
-	 */
-	void doProcess(ResourceProcessor processor, File from, File to, TransformContext context) throws Exception;
+	MutableTransformConfig createConfig(File projectRoot, File templateRoot, MProperties config, MProperties param);
 
 	/**
 	 * Search the processor by the processor name

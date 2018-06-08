@@ -16,6 +16,7 @@
 package de.mhus.osgi.transform.api;
 
 import java.io.File;
+import java.io.OutputStream;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MProperties;
@@ -26,17 +27,38 @@ public class TransformUtil {
 		transform(from, to, null, null, null, param, null);
 	}
 	
-	public static void transform(File from, File to, File projectRoot, File templateRoot, MProperties config, MProperties param, String processorName) throws Exception {
+	public static void transform(File from, File to, File projectRoot, File templateRoot, MProperties properties, MProperties param, String processorName) throws Exception {
 		TransformApi api = MApi.lookup(TransformApi.class);
 
-		TransformContext context = api.createContext(projectRoot, templateRoot, config, param);
+		if (templateRoot == null) templateRoot = from.getParentFile();
+		TransformConfig config = api.createConfig(projectRoot, templateRoot, properties, param);
 		ResourceProcessor processor = null;
 		if (processorName != null)
 			processor = api.findProcessor(processorName);
 		else
 			processor = api.findResourceProcessor(from.getName());
-		api.doProcess(processor, from, to, context);
-
+		
+		ProcessorContext c = processor.createContext(config);
+		c.doProcess(from, to);
+		c.close();
+		
 	}
-	
+
+	public static void transform(File from, OutputStream to, File projectRoot, File templateRoot, MProperties properties, MProperties param, String processorName) throws Exception {
+		TransformApi api = MApi.lookup(TransformApi.class);
+
+		if (templateRoot == null) templateRoot = from.getParentFile();
+		TransformConfig config = api.createConfig(projectRoot, templateRoot, properties, param);
+		ResourceProcessor processor = null;
+		if (processorName != null)
+			processor = api.findProcessor(processorName);
+		else
+			processor = api.findResourceProcessor(from.getName());
+		
+		ProcessorContext c = processor.createContext(config);
+		c.doProcess(from, to);
+		c.close();
+		
+	}
+
 }

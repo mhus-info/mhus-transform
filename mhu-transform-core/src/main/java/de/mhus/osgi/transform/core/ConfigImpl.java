@@ -20,20 +20,26 @@ import java.io.File;
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MProperties;
-import de.mhus.osgi.transform.api.TransformContext;
+import de.mhus.osgi.transform.api.MutableTransformConfig;
 
-public class ContextImpl implements TransformContext {
+public class ConfigImpl implements MutableTransformConfig {
 
 	private File templateRoot; // root of the current template
 	private File projectRoot; // base folder of all templates
 	private MProperties config;
 	private MProperties param;
+	private String charset = "utf-8";
 
-	public ContextImpl(File projectRoot, File templateRoot, MProperties config, MProperties param) {
+	public ConfigImpl(File projectRoot, File templateRoot, MProperties config, MProperties param) {
 		this.templateRoot = templateRoot;
 		this.projectRoot = projectRoot;
 		this.config = config;
 		this.param = param;
+	}
+	
+	@Override
+	public void setCharset(String charset) {
+		this.charset = charset;
 	}
 
 	@Override
@@ -54,6 +60,11 @@ public class ContextImpl implements TransformContext {
 	@Override
 	public File getProjectRoot() {
 		return projectRoot;
+	}
+
+	@Override
+	public String getCharset() {
+		return charset ;
 	}
 
 }
