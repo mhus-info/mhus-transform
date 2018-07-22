@@ -15,7 +15,7 @@
 ====
 
 
-version=1.1.1-SNAPSHOT
+version=1.1.2-SNAPSHOT
 install -s mvn:de.mhus.osgi/mhu-transform-api/${version}
 install -s mvn:de.mhus.osgi/mhu-transform-core/${version}
 install -s mvn:de.mhus.osgi/mhu-transform-jtwig/${version}
