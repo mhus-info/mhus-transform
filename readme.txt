@@ -25,6 +25,9 @@ install -s mvn:de.mhus.osgi/mhu-transform-freemarker/${version}
 install -s mvn:de.mhus.ports/ports-groovy/1.3.5-SNAPSHOT
 install -s mvn:de.mhus.osgi/mhu-transform-pdf/${version}
 
+bundle:install -s mvn:com.ibm.icu/icu4j/50.1.1
+install -s mvn:de.mhus.osgi/mhu-transform-birt/${version}
+
 Test installation:
 
 transform:test

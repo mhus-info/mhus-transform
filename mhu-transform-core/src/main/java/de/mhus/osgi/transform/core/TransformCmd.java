@@ -25,16 +25,19 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.MString;
+import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformUtil;
 
 @Command(scope = "transform", name = "transform", description = "Transform file")
 @Service
 public class TransformCmd implements Action {
 
-	@Argument(index=0, name="from", required=true, description="")
+	@Argument(index=0, name="from", required=true, description="From or command (if to is not set or empty)")
 	String from;
 
-	@Argument(index=1, name="to", required=true, description="")
+	@Argument(index=1, name="to", required=false, description="")
 	String to;
 
 	@Argument(index=2, name="parameters", required=false, description="Parameters", multiValued=true)
@@ -57,6 +60,18 @@ public class TransformCmd implements Action {
 
 	@Override
 	public Object execute() throws Exception {
+		
+		if (MString.isEmpty(to)) {
+			if (from.equals("list")) {
+				for (de.mhus.osgi.services.MOsgi.Service<ResourceProcessor> ref : MOsgi.getServiceRefs(ResourceProcessor.class, null)) {
+					System.out.println(">>> Processor");
+					System.out.println("  Name: " + ref.getName());
+					for (String key : ref.getReference().getPropertyKeys())
+						System.out.println(" " + key + "=" + ref.getReference().getProperty(key) );
+				}
+			}
+			return null;
+		}
 		
 		MProperties param = MProperties.explodeToMProperties(parameters);
 		MProperties config = null;

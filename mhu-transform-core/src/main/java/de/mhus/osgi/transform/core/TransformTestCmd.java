@@ -23,29 +23,38 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
 import de.mhus.osgi.services.deploy.BundleDeployer;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
+import de.mhus.osgi.transform.api.ProcessorContext;
+import de.mhus.osgi.transform.api.ResourceProcessor;
+import de.mhus.osgi.transform.api.TransformApi;
+import de.mhus.osgi.transform.api.TransformConfig;
 import de.mhus.osgi.transform.api.TransformUtil;
 
 @Command(scope = "transform", name = "test", description = "Transform test")
 @Service
 public class TransformTestCmd implements Action {
 
-	@Argument(index=0, name="processor", required=false, description="")
+	@Argument(index=0, name="processor", required=false, description="processor or birt")
 	String processor;
+	private File target;
 
 	@Override
 	public Object execute() throws Exception {
 		// Init
-		File target = BundleDeployer.deploy(FrameworkUtil.getBundle(TransformTestCmd.class), "/test", SENSIVITY.UPDATE);
+		target = BundleDeployer.deploy(FrameworkUtil.getBundle(TransformTestCmd.class), "/test", SENSIVITY.UPDATE);
 		System.out.println("--- Directory: " + target);
 		MProperties param = new MProperties();
 		param.setString("text", "World");
 		
 		if (processor != null) {
-			test(target,param,processor);
+			if (processor.equals("birt"))
+				testBirt();
+			else
+				test(target,param,processor);
 		} else {
 			// Test twig
 			test(target,param, "twig");
@@ -53,9 +62,41 @@ public class TransformTestCmd implements Action {
 			test(target,param, "vm");
 			// Test freemarker
 			test(target,param, "ftl");
+			// Test birt
+			testBirt();
 		}
 
 		return null;
+	}
+
+	private void testBirt() throws Exception {
+		System.out.println("======================");
+		System.out.println(" Birt");
+		System.out.println("======================");
+		TransformApi api = MApi.lookup(TransformApi.class);
+		ResourceProcessor birtProcessor = api.findProcessor("pdfreport");
+		
+		File projectRoot = target;
+		File templateRoot = target;
+		MProperties param = new MProperties();
+		param.setString("text", "World");
+		MProperties c = new MProperties();
+		TransformConfig config = api.createConfig(projectRoot, templateRoot, c, param);
+		ProcessorContext context = birtProcessor.createContext(config);
+		
+		File from = new File(target,"hello_world.rptdesign");
+		File to = new File(target, "birt-to.pdf");
+		if (to.exists()) to.delete();
+		
+		context.doProcess(from, to);
+		
+		if (to.exists()) {
+			System.out.println(">>> Transform successful");
+			System.out.println(to.getAbsolutePath());
+		} else {
+			System.out.println(">>> Transform failed !!!");
+		}
+		
 	}
 
 	private void test(File target, MProperties param, String name) {
