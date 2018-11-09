@@ -1,10 +1,19 @@
 package de.mhus.osgi.transform.birt;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.core.framework.Platform;
 import org.eclipse.birt.report.engine.api.EngineConfig;
@@ -56,10 +65,12 @@ public class BirtPdfReportGenerator extends MLog implements ResourceProcessor {
 		public void doProcess(File from, File to) throws Exception {
 			String id = UUID.randomUUID().toString();
 			File xmlFile = new File(context.getProjectRoot(), "birt_" + id + ".xml");
+			createXML(from, xmlFile);
+			
 			MFile.writeFile(xmlFile, "<print></print>");
 			createPDF(from.getAbsolutePath(), xmlFile.getAbsolutePath(), to.getAbsolutePath());
 			
-			if (!context.getProcessorConfig().getBoolean("debug", false))
+			if (context.getProcessorConfig() == null || !context.getProcessorConfig().getBoolean("debug", false))
 				xmlFile.delete();
 		}
 
@@ -73,108 +84,41 @@ public class BirtPdfReportGenerator extends MLog implements ResourceProcessor {
 			
 		}
 
-		private void createXML() throws Exception {
-/*			
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		private void createXML(File from, File out) throws Exception {
+
 			Document document = DocumentHelper.createDocument();
-	        Element ePrint = document.addElement( "print" );
-
-	        // <search name="Search Name" plz="12345">
-	        Element eSearch = ePrint.addElement("search")
-	        	.addAttribute("name", search.name)
-	        	.addAttribute("description", search.description)
-	        	.addAttribute("plz", "" + search.plz)
-	        	.addAttribute("surrounding", "" + search.surrounding)
-				.addAttribute("regional", "" + search.regionalOnly)
-				.addAttribute("keywordsin", search.keywordsIn)
-				.addAttribute("keywordsout", search.keywordsOut);
-			
-	        // <attributes>
-	        Element eAttributes = eSearch.addElement("attributes");
-	        Collections.sort(search.parameters,new Comparator<ISearchParameter>() {
-
-	        	ParamComparator pc = new ParamComparator();
-	        	
-				@Override
-				public int compare(ISearchParameter o1, ISearchParameter o2) {
-					try {
-			        	UUID pid1 = o1.getParamId();
-			        	Param paramObj1 = app.getReadManager().getObject(Param.class, pid1);
-			        	UUID pid2 = o2.getParamId();
-			        	Param paramObj2 = app.getReadManager().getObject(Param.class, pid2);
-			        	
-			        	return pc.compare(paramObj1, paramObj2);
-					} catch (Throwable t) {
-						t.printStackTrace();
-					}
-					return 0;
-				}
-			});
-	        for (ISearchParameter param : search.parameters) {
-	        	UUID pid = param.getParamId();
-	        	Param paramObj = app.getReadManager().getObject(Param.class, pid);
-	        	if (paramObj != null)
-	        		// <attribute name="Pb 1" max="1.5" unit="mg" />
-		        	eAttributes.addElement("attribute")
-		        		.addAttribute("name", paramObj.getName())
-		        		.addAttribute("description", paramObj.getDescription())
-		        		.addAttribute("type", paramObj.getTypeName())
-		        		.addAttribute("unit", paramObj.getUnitName())
-		        		.addAttribute("max", "" + param.getMax());
-	        }
-
-	        // <results>
-	        Element eResults = ePrint.addElement("results");
-	        for (Place p : places) {
-	        	// <place name="Deponie Nord" address="hier und da" note="note">
-	        	Element ePlace = eResults.addElement("place")
-	        			.addAttribute("name", p.getName())
-	        			.addAttribute("address", p.getAddress())
-	        			.addAttribute("description", p.getDescription())
-	        			.addAttribute("keywords", p.getKeywords())
-	        			.addAttribute("links", p.getLinks())
-	        			.addAttribute("plz", p.getPlz())
-	        			.addAttribute("note", p.getNote())
-	        			.addAttribute("town", p.getTown())
-	        			.addAttribute("distance", String.valueOf( ResultsTab.getDistance(app, p, search.plz) ) )
-	        			;
-	            // <attributes>
-	            Element ePAttributes = ePlace.addElement("attributes");
-	            for ( PlaceParam pp : p.getParameters().getRelations() ) {
-	            	Param paramObj = pp.getParam().getRelation();
-	            	if (paramObj != null)
-	            		// <attribute name="Pb 1" max="1.5" unit="mg" />
-	    	        	ePAttributes.addElement("attribute")
-	    	        		.addAttribute("name", paramObj.getName())
-	    	        		.addAttribute("description", paramObj.getDescription())
-	    	        		.addAttribute("type", paramObj.getTypeName())
-	    	        		.addAttribute("unit", paramObj.getUnitName())
-	    	        		.addAttribute("max", "" + pp.getMax())
-	    	        		.addAttribute("min", "" + pp.getMin());
-	            }
-	        }
+	        Element eConfig = document.addElement( "config" );
+	        Element eParam = eConfig.addElement("parameters");
 	        
-	        // <transporters>
-	        Element eTransporters = ePrint.addElement("transporters");
-	        if (transporterList != null) {
-		        for ( TransporterResult obj : transporterList) {
-		        	Transporter tra = obj.getTransporter();
-					long distance = obj.getDistance();
-					// <transporter name="nr 1" distance="1.8"/>
-					eTransporters.addElement("transporter")
-							.addAttribute("name", tra.getName())
-							.addAttribute("address", tra.getAddress())
-							.addAttribute("plz", "" + tra.getPlz())
-							.addAttribute("town", tra.getTown())
-							.addAttribute("priority", "" + tra.getPriority())
-							.addAttribute("distance", "" + distance);
-		
-		        }
-			}   
+			if (context.getParameters() != null) {
+
+				for (Entry<String, Object> entry : context.getParameters().entrySet()) {
+					if (entry.getValue() instanceof String)
+						eParam.addAttribute(entry.getKey(), String.valueOf(entry.getValue()));
+				}
+				for (Entry<String, Object> entry : context.getParameters().entrySet()) {
+					if (entry.getValue() instanceof List) {
+						Element eList = eConfig.addElement(entry.getKey() + "_");
+						List<Object> list = (List)entry.getValue();
+						for (Object entry2 : list) {
+							if (entry2 instanceof Map) {
+								Element eEntry = eList.addElement(entry.getKey());
+								Map<Object,Object> map = (Map)entry2;
+								for (Map.Entry<Object,Object> entry3 : map.entrySet()) {
+									eEntry.addAttribute(String.valueOf(entry3.getKey()), String.valueOf(entry3.getValue()));
+								}
+							}	
+						}
+					}
+				}
+			}
+			
 	        OutputFormat format = OutputFormat.createPrettyPrint();
-	        XMLWriter writer = new XMLWriter( new FileOutputStream( xmlFile ), format );
+	        XMLWriter writer = new XMLWriter( new FileOutputStream( out ), format );
 	        writer.write( document );
 	        writer.close();
-*/	        
+   
 		}
 		
 		private void createPDF(String report, String xmlFile, String pdfFile) throws BirtException {

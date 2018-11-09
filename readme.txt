@@ -44,6 +44,11 @@ transform:test
  FTL
 ======================
 >>> Transform successful
+======================
+ Birt
+======================
+2018-11-09 19:42:53,210 | INFO  | nsole user karaf | DataEngineImpl                   | 203 - mhu-transform-birt - 1.1.2.SNAPSHOT | Data Engine lifetime: 15 ms
+>>> Transform successful
 
 Execute transform by command:
 
