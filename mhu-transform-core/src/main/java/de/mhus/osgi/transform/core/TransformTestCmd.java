@@ -16,6 +16,7 @@
 package de.mhus.osgi.transform.core;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -26,6 +27,7 @@ import org.osgi.framework.FrameworkUtil;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.MSystem;
 import de.mhus.osgi.services.deploy.BundleDeployer;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
 import de.mhus.osgi.transform.api.ProcessorContext;
@@ -79,20 +81,35 @@ public class TransformTestCmd implements Action {
 		File projectRoot = target;
 		File templateRoot = target;
 		MProperties param = new MProperties();
-		param.setString("text", "World");
+		param.setString("sample", "HelloWorld");
 		MProperties c = new MProperties();
 		TransformConfig config = api.createConfig(projectRoot, templateRoot, c, param);
 		ProcessorContext context = birtProcessor.createContext(config);
 		
 		File from = new File(target,"hello_world.rptdesign");
-		File to = new File(target, "birt-to.pdf");
+		File to = new File(target, "birt-out.pdf");
 		if (to.exists()) to.delete();
 		
 		context.doProcess(from, to);
 		
 		if (to.exists()) {
-			System.out.println(">>> Transform successful");
+			
+			System.out.println(">>> Successfully created");
 			System.out.println(to.getAbsolutePath());
+			
+			try {
+				String[] res = MSystem.execute("pdftotext",to.getAbsolutePath(),"-");
+				if (res[0].contains("HelloWorld"))
+					System.out.println(">>> Transform successful");
+				else {
+					System.out.println(">>> Can't check pdf content");
+					System.out.println(res[0]);
+					System.err.println(res[1]);
+				}
+			} catch (IOException e) {
+				System.out.println(">>> Can't check pdf content");
+				System.err.println(e.toString());
+			}
 		} else {
 			System.out.println(">>> Transform failed !!!");
 		}
