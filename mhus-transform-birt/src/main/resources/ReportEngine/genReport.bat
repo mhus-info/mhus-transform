@@ -1,46 +1,56 @@
 ECHO off
 
+REM ################## USAGE OF REPORT ENGINE ################
 REM org.eclipse.birt.report.engine.impl.ReportRunner Usage:
 REM --mode/-m [ run | render | runrender] the default is runrender
 REM for runrender mode:
-REM      we should add it in the end <design file>
-REM      --format/-f [ HTML \| PDF ]
-REM      --output/-o <target file>
-REM      --htmlType/-t < HTML \| ReportletNoCSS >
-REM      --locale /-l <locale>
-REM      --parameter/-p <"parameterName=parameterValue">
-REM      --file/-F <parameter file>
-REM      --encoding/-e <target encoding>
+REM we should add it in the end <design file>
+REM    --format/-f [ HTML | PDF ]
+REM    --output/-o <target file>
+REM    --htmlType/-t < HTML | ReportletNoCSS >
+REM    --locale/-l <locale>
+REM    --parameter/-p <"parameterName=parameterValue">
+REM    --file/-F <parameter file>
+REM    --encoding/-e <target encoding>
 REM
-REM Locale: default is english
+REM Locale: default is English
 REM parameters in command line will overide parameters in parameter file
-REM parameter name cant include characters such as \ ', '=', ':'
+REM parameter name cannot include characters such as \' \'\, \'=\'\, \':\'
 REM
 REM For RUN mode:
-REM      we should add it in the end<design file>
-REM      --output/-o <target file>
-REM      --locale /-l <locale>
-REM      --parameter/-p <parameterName=parameterValue>
-REM      --file/-F <parameter file>
+REM we should add it in the end <design file>
+REM    --output/-o <target file>
+REM    --locale/-l <locale>
+REM    --parameter/-p <parameterName=parameterValue>
+REM    --file/-F <parameter file>
 REM
-REM Locale: default is english
-REM parameters in command line will overide parameters in parameter file 
-REM parameter name cant include characters such as \ ', '=', ':' 
+REM Locale: default is English
+REM parameters in command line will overide parameters in parameter file
+REM parameter name cannot include characters such as \' \'\, \'=\'\, \':\'
 REM
 REM For RENDER mode:
-REM     we should add it in the end<design file>
-REM     --output/-o <target file>
-REM     --page/-p <pageNumber>
-REM     --locale /-l <locale>
+REM we should add it in the end <design file>
+REM    --output/-o <target file>
+REM    --page/-p <pageNumber>
+REM    --locale/-l <locale>
 REM
-REM Locale: default is english
+REM Locale: default is English
+REM ################## USAGE OF REPORT ENGINE END ################
+
+REM set common variables
+SET BIRT_HOME=%~dp0\platform
+SET WORK_DIR=%~dp0
+
+ECHO BIRT_HOME=%BIRT_HOME%
+ECHO WORK_DIR=%WORK_DIR%
+
 IF not "%BIRT_HOME%" == "" GOTO runBirt
 ECHO "Please set BIRT_HOME first."
 GOTO end
 :runBirt
 
 
-SET java.io.tmpdir=%BIRT_HOME%\ReportEngine\tmpdir
+SET java.io.tmpdir=%WORK_DIR%\tmpdir
 SET org.eclipse.datatools_workspacepath=%java.io.tmpdir%\workspace_dtp
 
 
@@ -51,7 +61,7 @@ IF not exist %org.eclipse.datatools_workspacepath% mkdir %org.eclipse.datatools_
 REM set the birt class path.
 setlocal enabledelayedexpansion
 set BIRTCLASSPATH=
-for %%i in (%BIRT_HOME%\ReportEngine\lib\*.jar) do set BIRTCLASSPATH=%%i;!BIRTCLASSPATH!
+for %%i in (%WORK_DIR%\lib\*.jar) do set BIRTCLASSPATH=%%i;!BIRTCLASSPATH!
 
 
 REM set command
@@ -86,6 +96,6 @@ set p18=%9
 shift
 set p19=%9
 
-%JAVACMD% -cp "%BIRTCLASSPATH%" -DBIRT_HOME="%BIRT_HOME%\ReportEngine" org.eclipse.birt.report.engine.api.ReportRunner %p1% %p2% %p3% %p4% %p5% %p6% %p7% %p8% %p9% %p10% %p11% %p12% %p13% %p14% %p15% %p16% %p17% %p18% %p19%
+%JAVACMD% -cp "%BIRTCLASSPATH%" -DBIRT_HOME="%BIRT_HOME%" org.eclipse.birt.report.engine.api.ReportRunner %p1% %p2% %p3% %p4% %p5% %p6% %p7% %p8% %p9% %p10% %p11% %p12% %p13% %p14% %p15% %p16% %p17% %p18% %p19%
 
 :end
