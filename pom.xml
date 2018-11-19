@@ -49,7 +49,7 @@
 		</developer>
 	</developers>
 	<properties>
-		<mhulib.version>3.3.8-SNAPSHOT</mhulib.version>
+		<mhulib.version>3.4.0-SNAPSHOT</mhulib.version>
 		<osgitools.version>1.4.4-SNAPSHOT</osgitools.version>
 
 		<scr.packages>*</scr.packages>
