@@ -53,6 +53,9 @@ public class TransformTestCmd implements Action {
 		param.setString("text", "World");
 		
 		if (processor != null) {
+			if (processor.equals("soffice")) {
+				testSOffice();
+			} else
 			if (processor.equals("birt"))
 				testBirt();
 			else
@@ -66,9 +69,55 @@ public class TransformTestCmd implements Action {
 			test(target,param, "ftl");
 			// Test birt
 			testBirt();
+			// Test soffice
+			testSOffice();
 		}
 
 		return null;
+	}
+
+	private void testSOffice() throws Exception {
+		System.out.println("======================");
+		System.out.println(" SOffice");
+		System.out.println("======================");
+		TransformApi api = MApi.lookup(TransformApi.class);
+		ResourceProcessor odtProcessor = api.findProcessor("pdfsoffice");
+		
+		File projectRoot = target;
+		File templateRoot = target;
+		MProperties param = new MProperties();
+		param.setString("simple", "Panama");
+		MProperties c = new MProperties();
+		TransformConfig config = api.createConfig(projectRoot, templateRoot, c, param);
+		ProcessorContext context = odtProcessor.createContext(config);
+		
+		File from = new File(target,"soffice.odt");
+		File to = new File(target, "soffice-out.pdf");
+		if (to.exists()) to.delete();
+
+		context.doProcess(from, to);
+		
+		if (to.exists()) {
+			System.out.println(">>> Successfully created");
+			System.out.println(to.getAbsolutePath());
+			
+			try {
+				String[] res = MSystem.execute("pdftotext",to.getAbsolutePath(),"-");
+				if (res[0].contains("Panama"))
+					System.out.println(">>> Transform successful");
+				else {
+					System.out.println(">>> Can't check pdf content");
+					System.out.println(res[0]);
+					System.err.println(res[1]);
+				}
+			} catch (IOException e) {
+				System.out.println(">>> Can't check pdf content");
+				System.err.println(e.toString());
+			}
+		} else {
+			System.out.println(">>> Transform failed !!!");
+		}
+
 	}
 
 	private void testBirt() throws Exception {

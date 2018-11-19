@@ -17,7 +17,6 @@ package de.mhus.osgi.transform.soffice;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -27,12 +26,11 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.io.SOfficeConnector;
 import de.mhus.lib.core.io.StreamRewriter;
 import de.mhus.lib.core.io.UserFieldValuesRewriter;
-import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;
 
-@Component(properties={"processor=pdfform","extension=pdf"})
+@Component(properties={"processor=pdfsoffice","extension=odt"})
 public class SOfficeProcessor extends MLog implements ResourceProcessor {
 
 	private SOfficeConnector connector = new SOfficeConnector();

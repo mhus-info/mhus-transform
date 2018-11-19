@@ -30,7 +30,6 @@ import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;
