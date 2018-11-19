@@ -28,6 +28,8 @@ install -s mvn:de.mhus.osgi/mhu-transform-pdf/${version}
 bundle:install -s mvn:com.innoventsolutions.birt.runtime/com.ibm.icu_58.2.0.v20170418-1837/4.8.0
 install -s mvn:de.mhus.osgi/mhu-transform-birt/${version}
 
+install -s mvn:de.mhus.osgi/mhu-transform-soffice/${version}
+
 Test installation:
 
 transform:test
