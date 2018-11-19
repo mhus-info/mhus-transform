@@ -194,6 +194,8 @@
 		<module>mhu-transform-velocity</module>
 		<module>mhu-transform-jtwig</module>
 		<module>mhu-transform-freemarker</module>
+        <module>mhu-transform-birt</module>
+        <module>mhu-transform-soffice</module>
 	</modules>
 
 

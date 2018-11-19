@@ -16,8 +16,10 @@
 package de.mhus.osgi.transform.pdf;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
@@ -26,6 +28,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.IReadProperties;
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.osgi.transform.api.ProcessorContext;
@@ -145,7 +148,11 @@ public class PdfFormFillProcessor extends MLog implements ResourceProcessor {
 
 		@Override
 		public void doProcess(File from, OutputStream out) throws Exception {
-			throw new NotSupportedException();
+			File to = new File(context.getProjectRoot(), "output_"+UUID.randomUUID()+".pdf");
+			doProcess(from, to);
+			FileInputStream is = new FileInputStream(to);
+			MFile.copyFile(is, out);
+			to.delete();
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package de.mhus.osgi.transform.birt;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -71,7 +72,11 @@ public class BirtPdfReportGenerator extends MLog implements ResourceProcessor {
 
 		@Override
 		public void doProcess(File from, OutputStream out) throws Exception {
-			
+			File to = new File(context.getProjectRoot(), "output_"+UUID.randomUUID()+".pdf");
+			doProcess(from, to);
+			FileInputStream is = new FileInputStream(to);
+			MFile.copyFile(is, out);
+			to.delete();
 		}
 
 		@Override
