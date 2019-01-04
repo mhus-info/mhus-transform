@@ -19,13 +19,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mhu-transform-freemarker</artifactId>
+	<artifactId>mhu-transform-soffice</artifactId>
 	<packaging>bundle</packaging>
 
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
 		<artifactId>mhus-transform</artifactId>
-		<version>1.1.2</version>
+		<version>1.1.2-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -45,14 +45,13 @@
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>
-							de.mhus.osgi.transform.freemarker*;version=${project.version}
+							de.mhus.osgi.transform.soffice*;version=${project.version}
 						</Export-Package>
 						<Import-Package>
-                    	*;resolution:=optional
+							*
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 						<Service-Component>*</Service-Component>
-					    <Embed-Dependency>freemarker</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -92,12 +91,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
 		<dependency>
-		  <groupId>org.freemarker</groupId>
-		  <artifactId>freemarker</artifactId>
-		  <version>2.3.28</version>
+		    <groupId>org.codehaus.groovy</groupId>
+		    <artifactId>groovy-all</artifactId>
+		    <version>2.4.7</version>
 		</dependency>
-		
+
 	</dependencies>
 
 
