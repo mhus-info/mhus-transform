@@ -20,7 +20,7 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.io.SOfficeConnector;

@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;

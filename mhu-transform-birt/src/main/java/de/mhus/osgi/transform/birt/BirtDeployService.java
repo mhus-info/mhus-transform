@@ -2,7 +2,8 @@ package de.mhus.osgi.transform.birt;
 
 import java.io.File;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
+
 import de.mhus.osgi.services.DeployService;
 
 @Component

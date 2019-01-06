@@ -17,7 +17,7 @@ package de.mhus.osgi.transform.core;
 
 import java.io.File;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
