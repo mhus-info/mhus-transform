@@ -30,7 +30,7 @@ import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;
 
-@Component(properties={"processor=pdfsoffice","extension=odt"})
+@Component(property={"processor=pdfsoffice","extension=odt"})
 public class SOfficeProcessor extends MLog implements ResourceProcessor {
 
 	private SOfficeConnector connector = new SOfficeConnector();

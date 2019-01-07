@@ -34,7 +34,7 @@ import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;
 
-@Component(properties={"processor=pdfform","extension=pdf"})
+@Component(property={"processor=pdfform","extension=pdf"})
 public class PdfFormFillProcessor extends MLog implements ResourceProcessor {
 
 	@Override
