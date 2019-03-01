@@ -38,7 +38,6 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>${bundle.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
@@ -83,38 +82,21 @@
 		<dependency>
 			<groupId>de.mhus.osgi</groupId>
 			<artifactId>mhu-transform-api</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
-			<version>5.0.0</version>
-			<scope>provided</scope>
 		</dependency>
-
-<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>2.4.7</version>
 		</dependency>
-
-<!-- https://mvnrepository.com/artifact/org.eclipse.birt.runtime/org.eclipse.birt.runtime -->
-<!-- 
+		<!-- https://mvnrepository.com/artifact/com.innoventsolutions.birt.runtime/com.ibm.icu_58.2.0.v20170418-1837 -->
 		<dependency>
-			<groupId>org.eclipse.birt.runtime</groupId>
-			<artifactId>org.eclipse.birt.runtime</artifactId>
-			<version>4.6.0-20160607</version>
+		    <groupId>com.innoventsolutions.birt.runtime</groupId>
+		    <artifactId>com.ibm.icu_58.2.0.v20170418-1837</artifactId>
+		    <version>4.8.0</version>
 		</dependency>
- -->
-
-<!-- https://mvnrepository.com/artifact/com.innoventsolutions.birt.runtime/com.ibm.icu_58.2.0.v20170418-1837 -->
-<dependency>
-    <groupId>com.innoventsolutions.birt.runtime</groupId>
-    <artifactId>com.ibm.icu_58.2.0.v20170418-1837</artifactId>
-    <version>4.8.0</version>
-</dependency>
 
 <!-- ============================================================================================================= -->
 <!-- com.ibm.icu_58.2.0.v20170418-1837.jar -->
