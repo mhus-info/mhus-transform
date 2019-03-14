@@ -27,7 +27,7 @@ import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;
 
-@Component(property="extension=twig")
+@Component(property= {"extension=twig","processor=jtwig"})
 public class JtwigProcessor implements ResourceProcessor {
 
 	@Override

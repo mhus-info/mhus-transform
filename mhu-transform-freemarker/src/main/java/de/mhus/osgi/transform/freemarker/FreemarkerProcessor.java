@@ -36,7 +36,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-@Component(property="extension=ftl")
+@Component(property= {"extension=ftl","processor=freemarker"})
 public class FreemarkerProcessor extends MLog implements ResourceProcessor {
 
 	@Override

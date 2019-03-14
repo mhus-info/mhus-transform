@@ -40,7 +40,7 @@ import de.mhus.osgi.transform.api.ProcessorContext;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformConfig;
 
-@Component(property="extension=vm")
+@Component(property= {"extension=vm","processor=velocity"})
 public class VelocityResourceProcessor extends MLog implements ResourceProcessor {
 
 	@Override
