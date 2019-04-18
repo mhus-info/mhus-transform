@@ -18,7 +18,7 @@ package de.mhus.osgi.transform.api;
 import java.io.File;
 import java.io.OutputStream;
 
-import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MProperties;
 
 public class TransformUtil {
@@ -28,7 +28,7 @@ public class TransformUtil {
 	}
 	
 	public static void transform(File from, File to, File projectRoot, File templateRoot, MProperties properties, MProperties param, String processorName) throws Exception {
-		TransformApi api = MApi.lookup(TransformApi.class);
+		TransformApi api = M.l(TransformApi.class);
 
 		if (templateRoot == null) templateRoot = from.getParentFile();
 		TransformConfig config = api.createConfig(projectRoot, templateRoot, properties, param);
@@ -45,7 +45,7 @@ public class TransformUtil {
 	}
 
 	public static void transform(File from, OutputStream to, File projectRoot, File templateRoot, MProperties properties, MProperties param, String processorName) throws Exception {
-		TransformApi api = MApi.lookup(TransformApi.class);
+		TransformApi api = M.l(TransformApi.class);
 
 		if (templateRoot == null) templateRoot = from.getParentFile();
 		TransformConfig config = api.createConfig(projectRoot, templateRoot, properties, param);

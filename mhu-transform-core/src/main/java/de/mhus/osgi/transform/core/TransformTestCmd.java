@@ -24,7 +24,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.FrameworkUtil;
 
-import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MSystem;
@@ -80,7 +80,7 @@ public class TransformTestCmd implements Action {
 		System.out.println("======================");
 		System.out.println(" SOffice");
 		System.out.println("======================");
-		TransformApi api = MApi.lookup(TransformApi.class);
+		TransformApi api = M.l(TransformApi.class);
 		ResourceProcessor odtProcessor = api.findProcessor("pdfsoffice");
 		
 		File projectRoot = target;
@@ -124,7 +124,7 @@ public class TransformTestCmd implements Action {
 		System.out.println("======================");
 		System.out.println(" Birt");
 		System.out.println("======================");
-		TransformApi api = MApi.lookup(TransformApi.class);
+		TransformApi api = M.l(TransformApi.class);
 		ResourceProcessor birtProcessor = api.findProcessor("pdfreport");
 		
 		File projectRoot = target;
