@@ -102,7 +102,7 @@ public class TransformTestCmd implements Action {
 			System.out.println(to.getAbsolutePath());
 			
 			try {
-				String[] res = MSystem.execute("pdftotext",to.getAbsolutePath(),"-");
+				String[] res = MSystem.execute("pdftotext",to.getAbsolutePath(),"-").toArray();
 				if (res[0].contains("Panama"))
 					System.out.println(">>> Transform successful");
 				else {
@@ -147,7 +147,7 @@ public class TransformTestCmd implements Action {
 			System.out.println(to.getAbsolutePath());
 			
 			try {
-				String[] res = MSystem.execute("pdftotext",to.getAbsolutePath(),"-");
+				String[] res = MSystem.execute("pdftotext",to.getAbsolutePath(),"-").toArray();
 				if (res[0].contains("HelloWorld"))
 					System.out.println(">>> Transform successful");
 				else {
