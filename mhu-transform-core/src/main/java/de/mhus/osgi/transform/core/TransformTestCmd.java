@@ -18,7 +18,6 @@ package de.mhus.osgi.transform.core;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -28,6 +27,7 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MSystem;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.services.deploy.BundleDeployer;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
 import de.mhus.osgi.transform.api.ProcessorContext;
@@ -38,14 +38,14 @@ import de.mhus.osgi.transform.api.TransformUtil;
 
 @Command(scope = "transform", name = "test", description = "Transform test")
 @Service
-public class TransformTestCmd implements Action {
+public class TransformTestCmd extends AbstractCmd {
 
 	@Argument(index=0, name="processor", required=false, description="processor or birt")
 	String processor;
 	private File target;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		// Init
 		target = BundleDeployer.deploy(FrameworkUtil.getBundle(TransformTestCmd.class), "/test", SENSIVITY.UPDATE);
 		System.out.println("--- Directory: " + target);

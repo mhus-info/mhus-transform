@@ -17,7 +17,6 @@ package de.mhus.osgi.transform.core;
 
 import java.io.File;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -26,13 +25,14 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MString;
-import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformUtil;
 
 @Command(scope = "transform", name = "transform", description = "Transform file")
 @Service
-public class TransformCmd implements Action {
+public class TransformCmd extends AbstractCmd {
 
 	@Argument(index=0, name="from", required=true, description="From or command (if to is not set or empty)")
 	String from;
@@ -59,11 +59,11 @@ public class TransformCmd implements Action {
 	String processorName = null;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		if (MString.isEmpty(to)) {
 			if (from.equals("list")) {
-				for (de.mhus.osgi.services.MOsgi.Service<ResourceProcessor> ref : MOsgi.getServiceRefs(ResourceProcessor.class, null)) {
+				for (MOsgi.Service<ResourceProcessor> ref : MOsgi.getServiceRefs(ResourceProcessor.class, null)) {
 					System.out.println(">>> Processor");
 					System.out.println("  Name: " + ref.getName());
 					for (String key : ref.getReference().getPropertyKeys())

@@ -19,7 +19,7 @@ import java.io.File;
 
 import org.osgi.service.component.annotations.Component;
 
-import de.mhus.osgi.services.DeployService;
+import de.mhus.osgi.api.deploy.DeployService;
 
 @Component
 public class BirtDeployService implements DeployService {
