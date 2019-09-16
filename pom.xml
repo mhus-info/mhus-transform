@@ -27,7 +27,7 @@
     </parent>
 	<groupId>de.mhus.osgi</groupId>
 	<artifactId>mhus-transform</artifactId>
-	<version>1.6.2</version>
+	<version>1.6.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Transform Tools</name>
 	<description>A set of tools transform content</description>
