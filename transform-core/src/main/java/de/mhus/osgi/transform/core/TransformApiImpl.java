@@ -31,7 +31,7 @@ public class TransformApiImpl extends MLog implements TransformApi {
     @Override
     public ResourceProcessor findResourceProcessor(String fileName) throws NotFoundException {
 
-        String ext = MFile.getFileSuffix(fileName);
+        String ext = MFile.getFileExtension(fileName);
         ResourceProcessor processor =
                 MOsgi.getService(ResourceProcessor.class, "(extension=" + ext + ")");
 
