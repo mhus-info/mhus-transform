@@ -20,6 +20,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MString;
@@ -97,7 +98,7 @@ public class TransformCmd extends AbstractCmd {
             return null;
         }
 
-        MProperties param = MProperties.explodeToMProperties(parameters);
+        MProperties param = IProperties.explodeToMProperties(parameters);
         MProperties config = null;
         if (configFile != null) config = MProperties.load(configFile);
 
