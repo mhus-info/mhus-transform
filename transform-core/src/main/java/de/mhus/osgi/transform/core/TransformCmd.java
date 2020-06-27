@@ -24,8 +24,8 @@ import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MString;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformUtil;
 

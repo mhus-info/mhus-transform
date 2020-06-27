@@ -16,11 +16,12 @@ package de.mhus.osgi.transform.core;
 import java.io.File;
 
 import org.osgi.service.component.annotations.Component;
+
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.transform.api.MutableTransformConfig;
 import de.mhus.osgi.transform.api.ResourceProcessor;
 import de.mhus.osgi.transform.api.TransformApi;
