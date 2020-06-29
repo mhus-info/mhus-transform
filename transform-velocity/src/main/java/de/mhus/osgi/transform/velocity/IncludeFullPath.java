@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.event.IncludeEventHandler;
+import org.apache.velocity.context.Context;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
@@ -32,7 +33,7 @@ import de.mhus.lib.core.MLog;
  */
 public class IncludeFullPath extends MLog implements IncludeEventHandler {
 
-    static ThreadLocal<VelocityContext> contexts = new ThreadLocal<>();
+    //static ThreadLocal<VelocityContext> contexts = new ThreadLocal<>();
     static ThreadLocal<String> projectPathes = new ThreadLocal<>();
 
     /**
@@ -46,14 +47,14 @@ public class IncludeFullPath extends MLog implements IncludeEventHandler {
      * @return new path relative to the current template's path
      */
     @Override
-    public String includeEvent(
+    public String includeEvent(Context context, 
             String includeResourcePath, String currentResourcePath, String directiveName) {
         // if the resource name starts with a slash, it's not a relative path
         if (includeResourcePath.startsWith("/") || includeResourcePath.startsWith("\\")) {
             return includeResourcePath;
         }
 
-        VelocityContext context = contexts.get();
+        // VelocityContext context2 = contexts.get();
         String path = (String) context.get("path");
         try {
             String projectPath = projectPathes.get();
@@ -70,8 +71,8 @@ public class IncludeFullPath extends MLog implements IncludeEventHandler {
         else projectPathes.set(path);
     }
 
-    public static void setContext(VelocityContext context) {
-        if (context == null) contexts.remove();
-        else contexts.set(context);
-    }
+//    public static void setContext(VelocityContext context) {
+//        if (context == null) contexts.remove();
+//        else contexts.set(context);
+//    }
 }

@@ -28,8 +28,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.tools.generic.DateTool;
 import org.apache.velocity.tools.generic.EscapeTool;
-
 import org.osgi.service.component.annotations.Component;
+
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
@@ -58,7 +58,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
         public Context(TransformConfig context) throws MException, IOException {
             this.context = context;
             ve = new VelocityEngine();
-            ve.setProperty(VelocityEngine.RUNTIME_LOG, "mylog");
+            ve.setProperty(RuntimeConstants.RUNTIME_LOG_NAME, "mylog");
 
             IReadProperties config = context.getProcessorConfig();
             if (config == null) config = new MProperties();
@@ -110,7 +110,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                 vcontext.put("__path", path);
 
                 if (projectPath != null) {
-                    IncludeFullPath.setContext(vcontext);
+                    //IncludeFullPath.setContext(vcontext);
                     IncludeFullPath.setProjectPath(projectPath);
                 }
                 FileWriter writer = new FileWriter(to);
@@ -121,7 +121,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                     throw th;
                 } finally {
                     if (projectPath != null) {
-                        IncludeFullPath.setContext(null);
+                        //IncludeFullPath.setContext(null);
                         IncludeFullPath.setProjectPath(null);
                     }
                     writer.close();
@@ -147,7 +147,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                 vcontext.put("__path", path);
 
                 if (projectPath != null) {
-                    IncludeFullPath.setContext(vcontext);
+                    //IncludeFullPath.setContext(vcontext);
                     IncludeFullPath.setProjectPath(projectPath);
                 }
 
@@ -159,7 +159,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                     throw th;
                 } finally {
                     if (projectPath != null) {
-                        IncludeFullPath.setContext(null);
+                        //IncludeFullPath.setContext(null);
                         IncludeFullPath.setProjectPath(null);
                     }
                     writer.flush();
