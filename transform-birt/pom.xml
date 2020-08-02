@@ -54,7 +54,8 @@
 							org.w3c.dom*,
 							java.*,
 							javax.*,
-							org.xml.sax.*
+							org.xml.sax.*,
+							javax.annotation.*;resolution=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 						<Service-Component>de.mhus.osgi.transform.birt*</Service-Component>
