@@ -49,6 +49,15 @@
 						<Import-Package>
                     	*;resolution:=optional
 						</Import-Package>
+						<Private-Package>
+						  org.jtwig.*,
+						  com.google.common.*,
+						  com.google.thridparty.*,
+						  org.apache.commons.lang3.*,
+						  org.parboiled.*,
+						  com.googlecode.*,
+						  org.objectweb.*
+						</Private-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 						<Service-Component>*</Service-Component>
 						<Embed-Dependency>jtwig-core,jtwig-reflection,guava,commons-lang3,parboiled-java,parboiled-core,asm,asm-tree,asm-analysis,asm-util,concurrentlinkedhashmap-lru</Embed-Dependency>
@@ -98,6 +107,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
+      <version>18.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

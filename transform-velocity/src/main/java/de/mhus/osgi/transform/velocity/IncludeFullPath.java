@@ -16,7 +16,6 @@ package de.mhus.osgi.transform.velocity;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.event.IncludeEventHandler;
 import org.apache.velocity.context.Context;
 

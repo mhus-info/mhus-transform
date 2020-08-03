@@ -48,12 +48,13 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
 
     private class Context implements ProcessorContext {
 
-        private Properties props;
+        //private Properties props;
         private VelocityContext vcontext;
         private File templateRoot;
         private String projectPath;
         private VelocityEngine ve;
         private TransformConfig context;
+        private TransformResourceManager resourceManager;
 
         public Context(TransformConfig context) throws MException, IOException {
             this.context = context;
@@ -69,12 +70,14 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
             templateRoot = context.getTemplateRoot();
             if (templateRoot == null) throw new MException("template root not set");
             File propFile = new File(templateRoot, velocityProperties);
-            props = new Properties();
+            //props = new Properties();
 
             if (propFile.exists()) {
                 FileInputStream is = new FileInputStream(propFile);
+                Properties props = new Properties();
                 props.load(is);
                 is.close();
+                ve.setProperties(props);
             }
 
             projectPath =
@@ -82,10 +85,12 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                             ? context.getProjectRoot().getAbsolutePath()
                             : null;
             if (projectPath != null)
-                props.setProperty(
+                ve.setProperty(
                         RuntimeConstants.EVENTHANDLER_INCLUDE, IncludeFullPath.class.getName());
 
-            ve.init(props);
+            resourceManager = new TransformResourceManager();
+            ve.setProperty(RuntimeConstants.RESOURCE_MANAGER_INSTANCE, resourceManager);
+            ve.init();
 
             vcontext = new VelocityContext();
 
@@ -102,10 +107,13 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
         public void doProcess(File from, File to) throws Exception {
             synchronized (this) {
                 String path = from.getParentFile().getAbsolutePath();
-                props.put(
-                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-                        path + "," + templateRoot.getCanonicalPath());
-
+//                props.put(
+//                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
+//                        path + "," + templateRoot.getCanonicalPath());
+//
+//                ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, 
+//                        path + "," + templateRoot.getCanonicalPath());
+                resourceManager.updatePath( path, templateRoot.getCanonicalPath() );
                 Template t = ve.getTemplate(from.getName());
                 vcontext.put("__path", path);
 
@@ -139,10 +147,11 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
         public void doProcess(File from, OutputStream out) throws Exception {
             synchronized (this) {
                 String path = from.getParentFile().getAbsolutePath();
-                props.put(
-                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-                        path + "," + templateRoot.getCanonicalPath());
+//                props.put(
+//                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
+//                        path + "," + templateRoot.getCanonicalPath());
 
+                resourceManager.updatePath( path, templateRoot.getCanonicalPath() );
                 Template t = ve.getTemplate(from.getName());
                 vcontext.put("__path", path);
 
