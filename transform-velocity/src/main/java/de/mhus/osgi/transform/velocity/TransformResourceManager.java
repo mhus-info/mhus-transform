@@ -8,22 +8,26 @@ import org.apache.velocity.runtime.resource.Resource;
 
 import de.mhus.lib.core.MString;
 
-public class TransformResourceManager implements org.apache.velocity.runtime.resource.ResourceManager{
+public class TransformResourceManager
+        implements org.apache.velocity.runtime.resource.ResourceManager {
 
-    private org.apache.velocity.runtime.resource.ResourceManager instance = new org.apache.velocity.runtime.resource.ResourceManagerImpl();
+    private org.apache.velocity.runtime.resource.ResourceManager instance =
+            new org.apache.velocity.runtime.resource.ResourceManagerImpl();
     private RuntimeServices rs;
 
-    public void updatePath(String ... paths) {
+    public void updatePath(String... paths) {
         instance = new org.apache.velocity.runtime.resource.ResourceManagerImpl();
-        rs.getConfiguration().addProperty("resource.loader.file." + RuntimeConstants.RESOURCE_LOADER_PATHS, MString.join(paths, ','));
+        rs.getConfiguration()
+                .addProperty(
+                        "resource.loader.file." + RuntimeConstants.RESOURCE_LOADER_PATHS,
+                        MString.join(paths, ','));
         instance.initialize(rs);
     }
 
     @Override
     public void initialize(RuntimeServices rs) {
         this.rs = rs;
-        if (instance != null)
-            instance.initialize(rs);
+        if (instance != null) instance.initialize(rs);
     }
 
     @Override
@@ -36,5 +40,4 @@ public class TransformResourceManager implements org.apache.velocity.runtime.res
     public String getLoaderNameForResource(String resourceName) {
         return instance.getLoaderNameForResource(resourceName);
     }
-    
 }

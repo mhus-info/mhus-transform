@@ -36,21 +36,29 @@ public class TransformUtil {
             MProperties param,
             String processorName)
             throws Exception {
-        
-        try (Scope scope = ITracer.get().enter("transform:" + processorName, 
-                "from", from, 
-                "to", to, 
-                "template", templateRoot, 
-                "properties", properties, 
-                "param", param)) {
+
+        try (Scope scope =
+                ITracer.get()
+                        .enter(
+                                "transform:" + processorName,
+                                "from",
+                                from,
+                                "to",
+                                to,
+                                "template",
+                                templateRoot,
+                                "properties",
+                                properties,
+                                "param",
+                                param)) {
             TransformApi api = M.l(TransformApi.class);
-    
+
             if (templateRoot == null) templateRoot = from.getParentFile();
             TransformConfig config = api.createConfig(projectRoot, templateRoot, properties, param);
             ResourceProcessor processor = null;
             if (processorName != null) processor = api.findProcessor(processorName);
             else processor = api.findResourceProcessor(from.getName());
-    
+
             ProcessorContext c = processor.createContext(config);
             c.doProcess(from, to);
             c.close();
@@ -67,19 +75,26 @@ public class TransformUtil {
             String processorName)
             throws Exception {
 
-        try (Scope scope = ITracer.get().enter("transform:" + processorName, 
-                "from", from, 
-                "template", templateRoot, 
-                "properties", properties, 
-                "param", param)) {
+        try (Scope scope =
+                ITracer.get()
+                        .enter(
+                                "transform:" + processorName,
+                                "from",
+                                from,
+                                "template",
+                                templateRoot,
+                                "properties",
+                                properties,
+                                "param",
+                                param)) {
             TransformApi api = M.l(TransformApi.class);
-    
+
             if (templateRoot == null) templateRoot = from.getParentFile();
             TransformConfig config = api.createConfig(projectRoot, templateRoot, properties, param);
             ResourceProcessor processor = null;
             if (processorName != null) processor = api.findProcessor(processorName);
             else processor = api.findResourceProcessor(from.getName());
-    
+
             ProcessorContext c = processor.createContext(config);
             c.doProcess(from, to);
             c.close();

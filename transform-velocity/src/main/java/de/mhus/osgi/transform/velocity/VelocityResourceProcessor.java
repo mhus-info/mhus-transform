@@ -48,7 +48,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
 
     private class Context implements ProcessorContext {
 
-        //private Properties props;
+        // private Properties props;
         private VelocityContext vcontext;
         private File templateRoot;
         private String projectPath;
@@ -70,7 +70,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
             templateRoot = context.getTemplateRoot();
             if (templateRoot == null) throw new MException("template root not set");
             File propFile = new File(templateRoot, velocityProperties);
-            //props = new Properties();
+            // props = new Properties();
 
             if (propFile.exists()) {
                 FileInputStream is = new FileInputStream(propFile);
@@ -107,18 +107,18 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
         public void doProcess(File from, File to) throws Exception {
             synchronized (this) {
                 String path = from.getParentFile().getAbsolutePath();
-//                props.put(
-//                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-//                        path + "," + templateRoot.getCanonicalPath());
-//
-//                ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, 
-//                        path + "," + templateRoot.getCanonicalPath());
-                resourceManager.updatePath( path, templateRoot.getCanonicalPath() );
+                //                props.put(
+                //                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
+                //                        path + "," + templateRoot.getCanonicalPath());
+                //
+                //                ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
+                //                        path + "," + templateRoot.getCanonicalPath());
+                resourceManager.updatePath(path, templateRoot.getCanonicalPath());
                 Template t = ve.getTemplate(from.getName());
                 vcontext.put("__path", path);
 
                 if (projectPath != null) {
-                    //IncludeFullPath.setContext(vcontext);
+                    // IncludeFullPath.setContext(vcontext);
                     IncludeFullPath.setProjectPath(projectPath);
                 }
                 FileWriter writer = new FileWriter(to);
@@ -129,7 +129,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                     throw th;
                 } finally {
                     if (projectPath != null) {
-                        //IncludeFullPath.setContext(null);
+                        // IncludeFullPath.setContext(null);
                         IncludeFullPath.setProjectPath(null);
                     }
                     writer.close();
@@ -147,16 +147,16 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
         public void doProcess(File from, OutputStream out) throws Exception {
             synchronized (this) {
                 String path = from.getParentFile().getAbsolutePath();
-//                props.put(
-//                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-//                        path + "," + templateRoot.getCanonicalPath());
+                //                props.put(
+                //                        RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
+                //                        path + "," + templateRoot.getCanonicalPath());
 
-                resourceManager.updatePath( path, templateRoot.getCanonicalPath() );
+                resourceManager.updatePath(path, templateRoot.getCanonicalPath());
                 Template t = ve.getTemplate(from.getName());
                 vcontext.put("__path", path);
 
                 if (projectPath != null) {
-                    //IncludeFullPath.setContext(vcontext);
+                    // IncludeFullPath.setContext(vcontext);
                     IncludeFullPath.setProjectPath(projectPath);
                 }
 
@@ -168,7 +168,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                     throw th;
                 } finally {
                     if (projectPath != null) {
-                        //IncludeFullPath.setContext(null);
+                        // IncludeFullPath.setContext(null);
                         IncludeFullPath.setProjectPath(null);
                     }
                     writer.flush();
