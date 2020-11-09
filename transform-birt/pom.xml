@@ -865,10 +865,18 @@
 
 <!-- ============================================================================================================= -->
 
+<!-- Dependencies to build the bundle -->
 <dependency>
   <groupId>com.google.code.findbugs</groupId>
   <artifactId>jsr305</artifactId>
   <version>3.0.2</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/animal-sniffer-annotations -->
+<dependency>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>animal-sniffer-annotations</artifactId>
+    <version>1.19</version>
+    <scope>provided</scope>
 </dependency>
 
 	</dependencies>
