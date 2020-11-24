@@ -58,7 +58,8 @@ public class TransformTestCmd extends AbstractCmd {
         if (processor != null) {
             if (processor.equals("soffice")) {
                 testSOffice();
-            } else if (processor.equals("birt")) testBirt();
+            } 
+//            else if (processor.equals("birt")) testBirt();
             else test(target, param, processor);
         } else {
             // Test twig
@@ -68,7 +69,7 @@ public class TransformTestCmd extends AbstractCmd {
             // Test freemarker
             test(target, param, "ftl");
             // Test birt
-            testBirt();
+//            testBirt();
             // Test soffice
             testSOffice();
         }
@@ -117,7 +118,7 @@ public class TransformTestCmd extends AbstractCmd {
             System.out.println(">>> Transform failed !!!");
         }
     }
-
+/*
     private void testBirt() throws Exception {
         System.out.println("======================");
         System.out.println(" Birt");
@@ -160,7 +161,7 @@ public class TransformTestCmd extends AbstractCmd {
             System.out.println(">>> Transform failed !!!");
         }
     }
-
+*/
     private void test(File target, MProperties param, String name) {
         name = name.toLowerCase();
         try {
