@@ -177,8 +177,8 @@ public class TransformTestCmd extends AbstractCmd {
 
             String toContent = MFile.readFile(to).trim();
             String outContent = MFile.readFile(out).trim();
-            if (MString.isIndex("====", outContent))
-                outContent = MString.afterLastIndex("====", outContent).trim();
+            if (MString.isIndex(outContent, '='))
+                outContent = MString.afterLastIndex(outContent, '=').trim();
 
             if (toContent.equals(outContent)) System.out.println(">>> Transform successful");
             else {
