@@ -26,6 +26,7 @@ import org.osgi.framework.FrameworkUtil;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.services.deploy.BundleDeployer;
@@ -176,6 +177,8 @@ public class TransformTestCmd extends AbstractCmd {
 
             String toContent = MFile.readFile(to).trim();
             String outContent = MFile.readFile(out).trim();
+            if (MString.isIndex("====", outContent))
+                outContent = MString.afterLastIndex("====", outContent).trim();
 
             if (toContent.equals(outContent)) System.out.println(">>> Transform successful");
             else {
