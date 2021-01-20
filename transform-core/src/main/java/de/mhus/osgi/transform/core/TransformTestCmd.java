@@ -59,8 +59,8 @@ public class TransformTestCmd extends AbstractCmd {
         if (processor != null) {
             if (processor.equals("soffice")) {
                 testSOffice();
-            } 
-//            else if (processor.equals("birt")) testBirt();
+            }
+            //            else if (processor.equals("birt")) testBirt();
             else test(target, param, processor);
         } else {
             // Test twig
@@ -70,7 +70,7 @@ public class TransformTestCmd extends AbstractCmd {
             // Test freemarker
             test(target, param, "ftl");
             // Test birt
-//            testBirt();
+            //            testBirt();
             // Test soffice
             testSOffice();
         }
@@ -119,50 +119,50 @@ public class TransformTestCmd extends AbstractCmd {
             System.out.println(">>> Transform failed !!!");
         }
     }
-/*
-    private void testBirt() throws Exception {
-        System.out.println("======================");
-        System.out.println(" Birt");
-        System.out.println("======================");
-        TransformApi api = M.l(TransformApi.class);
-        ResourceProcessor birtProcessor = api.findProcessor("pdfreport");
+    /*
+        private void testBirt() throws Exception {
+            System.out.println("======================");
+            System.out.println(" Birt");
+            System.out.println("======================");
+            TransformApi api = M.l(TransformApi.class);
+            ResourceProcessor birtProcessor = api.findProcessor("pdfreport");
 
-        File projectRoot = target;
-        File templateRoot = target;
-        MProperties param = new MProperties();
-        param.setString("sample", "HelloWorld");
-        MProperties c = new MProperties();
-        TransformConfig config = api.createConfig(projectRoot, templateRoot, c, param);
-        ProcessorContext context = birtProcessor.createContext(config);
+            File projectRoot = target;
+            File templateRoot = target;
+            MProperties param = new MProperties();
+            param.setString("sample", "HelloWorld");
+            MProperties c = new MProperties();
+            TransformConfig config = api.createConfig(projectRoot, templateRoot, c, param);
+            ProcessorContext context = birtProcessor.createContext(config);
 
-        File from = new File(target, "hello_world.rptdesign");
-        File to = new File(target, "birt-out.pdf");
-        if (to.exists()) to.delete();
+            File from = new File(target, "hello_world.rptdesign");
+            File to = new File(target, "birt-out.pdf");
+            if (to.exists()) to.delete();
 
-        context.doProcess(from, to);
+            context.doProcess(from, to);
 
-        if (to.exists()) {
+            if (to.exists()) {
 
-            System.out.println(">>> Successfully created");
-            System.out.println(to.getAbsolutePath());
+                System.out.println(">>> Successfully created");
+                System.out.println(to.getAbsolutePath());
 
-            try {
-                String[] res = MSystem.execute("pdftotext", to.getAbsolutePath(), "-").toArray();
-                if (res[0].contains("HelloWorld")) System.out.println(">>> Transform successful");
-                else {
+                try {
+                    String[] res = MSystem.execute("pdftotext", to.getAbsolutePath(), "-").toArray();
+                    if (res[0].contains("HelloWorld")) System.out.println(">>> Transform successful");
+                    else {
+                        System.out.println(">>> Can't check pdf content");
+                        System.out.println(res[0]);
+                        System.err.println(res[1]);
+                    }
+                } catch (IOException e) {
                     System.out.println(">>> Can't check pdf content");
-                    System.out.println(res[0]);
-                    System.err.println(res[1]);
+                    System.err.println(e.toString());
                 }
-            } catch (IOException e) {
-                System.out.println(">>> Can't check pdf content");
-                System.err.println(e.toString());
+            } else {
+                System.out.println(">>> Transform failed !!!");
             }
-        } else {
-            System.out.println(">>> Transform failed !!!");
         }
-    }
-*/
+    */
     private void test(File target, MProperties param, String name) {
         name = name.toLowerCase();
         try {
