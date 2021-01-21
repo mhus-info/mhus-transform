@@ -1,5 +1,5 @@
 @REM
-@REM Copyright (C) 2020 Mike Hummel (mh@mhus.de)
+@REM Copyright (C) 2019 Mike Hummel (mh@mhus.de)
 @REM
 @REM Licensed under the Apache License, Version 2.0 (the "License");
 @REM you may not use this file except in compliance with the License.
