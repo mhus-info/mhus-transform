@@ -47,6 +47,7 @@
 							de.mhus.osgi.transform.pdf*;version=${project.version}
 						</Export-Package>
 						<Import-Package>
+    						sun.java2d.cmm.kcms.*;resolution:=optional,
 							*
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
