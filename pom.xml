@@ -30,7 +30,7 @@
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Transform Tools</name>
 	<description>A set of tools transform content</description>
-	<url>http://www.mhus.de</url>
+	<url>http://www.mhus.info</url>
     <properties>
         <mhus-transform.version>${project.version}</mhus-transform.version>
     </properties>
@@ -43,8 +43,8 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/mhus/mhus-transform</url>
-		<connection>scm:git:https://github.com/mhus/mhus-transform</connection>
+		<url>https://github.com/mhus-info/mhus-transform</url>
+		<connection>scm:git:https://github.com/mhus-info/mhus-transform</connection>
 	</scm>
 	<developers>
 		<developer>
