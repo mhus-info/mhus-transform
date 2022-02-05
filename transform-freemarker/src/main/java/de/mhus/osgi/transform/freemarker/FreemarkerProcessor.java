@@ -24,6 +24,8 @@ import java.io.Writer;
 import java.util.Map.Entry;
 
 import org.osgi.service.component.annotations.Component;
+
+import de.mhus.lib.basics.RC;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
@@ -58,7 +60,7 @@ public class FreemarkerProcessor extends MLog implements ResourceProcessor {
             cfg = new Configuration(Configuration.VERSION_2_3_27);
 
             File templateRoot = context.getTemplateRoot();
-            if (templateRoot == null) throw new MException("template root not set");
+            if (templateRoot == null) throw new MException(RC.ERROR, "template root not set");
             projectRoot = context.getProjectRoot();
             if (projectRoot == null) projectRoot = templateRoot;
 

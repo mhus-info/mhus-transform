@@ -32,6 +32,7 @@ import org.apache.velocity.tools.generic.DateTool;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.osgi.service.component.annotations.Component;
 
+import de.mhus.lib.basics.RC;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
@@ -70,7 +71,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                     config.getString("velocity.properties", "velocity.properties");
 
             templateRoot = context.getTemplateRoot();
-            if (templateRoot == null) throw new MException("template root not set");
+            if (templateRoot == null) throw new MException(RC.ERROR, "template root not set");
             File propFile = new File(templateRoot, velocityProperties);
             // props = new Properties();
 
