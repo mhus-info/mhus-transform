@@ -128,7 +128,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                 try {
                     t.merge(vcontext, writer);
                 } catch (Throwable th) {
-                    log().e(from, th);
+                    log().e("merge failed", from, th);
                     throw th;
                 } finally {
                     if (projectPath != null) {
@@ -167,7 +167,7 @@ public class VelocityResourceProcessor extends MLog implements ResourceProcessor
                 try {
                     t.merge(vcontext, writer);
                 } catch (Throwable th) {
-                    log().e(from, th);
+                    log().e("merge failed", from, th);
                     throw th;
                 } finally {
                     if (projectPath != null) {
