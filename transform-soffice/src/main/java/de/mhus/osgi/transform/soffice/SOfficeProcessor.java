@@ -74,8 +74,9 @@ public class SOfficeProcessor extends MLog implements ResourceProcessor {
         public void doProcess(File from, OutputStream out) throws Exception {
             File to = new File(context.getProjectRoot(), "output_" + UUID.randomUUID() + ".pdf");
             doProcess(from, to);
-            FileInputStream is = new FileInputStream(to);
-            MFile.copyFile(is, out);
+            try(FileInputStream is = new FileInputStream(to)){            	
+            	MFile.copyFile(is, out);
+            }
             to.delete();
         }
     }
